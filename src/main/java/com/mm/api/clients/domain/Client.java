@@ -30,7 +30,6 @@ public class Client {
     @Column(name = "active")
     private Boolean active;
 
-    @Column(name = "address")
     @OneToOne(mappedBy = "client", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     private Address address;
 
