@@ -1,33 +1,39 @@
 package com.mm.api.clients.controller;
 
 import com.mm.api.clients.domain.Client;
+import com.mm.api.clients.service.ClientService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/clients")
 public class ClientController {
 
+    @Autowired
+    private ClientService clientService;
 
-    //GET: obtener informacion
-    //POST: guardar informacion
-    //PUT: editar informacion
-    //DELETE: borrar informacion
-
-    // Verbos web, codigos http
-
-    @GetMapping(value = "/get")
-    public ResponseEntity<Client> getClient() {
-
-        Client client = new Client();
-        client.setName("John");
-        client.setLastName("Conor");
-        client.setEmail("j.conor@email.com");
-
-        return new ResponseEntity<>(client, HttpStatus.OK);
+    // OBTENER TODOS LOS CLIENTES
+    @GetMapping(value = "/all")
+    public ResponseEntity<List<Client>> getClients() {
+        List<Client> clients = clientService.getAllClients();
+        return new ResponseEntity<>(clients, HttpStatus.OK);
     }
+
+    // OBTENER UN CLIENTE POR ID
+    // GUARDAR NUEVO CLIENTE
+    @PostMapping(value = "/")
+    public ResponseEntity<Client> save(@RequestBody Client client) {
+        Client savedClient = clientService.save(client);
+        return new ResponseEntity<>(savedClient, HttpStatus.CREATED);
+    }
+
+
+    // EDITAR CLIENTE
+    // BORRAR CLIENTE
+
 
 }
