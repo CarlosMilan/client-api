@@ -24,16 +24,27 @@ public class ClientController {
     }
 
     // OBTENER UN CLIENTE POR ID
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<Client> getClient(@PathVariable(name = "id") Long id) {
+        Client client = clientService.findById(id);
+        return new ResponseEntity<>(client, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/email/{email}")
+    public ResponseEntity<Client> getClientByEmail(@PathVariable(name = "email") String email) {
+        Client client = clientService.findByEmail(email);
+        return new ResponseEntity<>(client, HttpStatus.OK);
+    }
+
     // GUARDAR NUEVO CLIENTE
-    @PostMapping(value = "/")
+    @PostMapping
     public ResponseEntity<Client> save(@RequestBody Client client) {
         Client savedClient = clientService.save(client);
         return new ResponseEntity<>(savedClient, HttpStatus.CREATED);
     }
 
-
     // EDITAR CLIENTE
     // BORRAR CLIENTE
-
 
 }
